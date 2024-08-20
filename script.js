@@ -31,10 +31,6 @@ const repassword = document.getElementById('repassword');
 
     }
 
-  
-
-
-
     function checkRequired(inputs){
     //  console.log(input.value);
     inputs.forEach(function(input) {    
@@ -48,46 +44,32 @@ const repassword = document.getElementById('repassword');
     }
 
 
+    function checkLength(input, min, max){
+        if(input.value.length < min){
+            error(input, `${input.id} en az ${min} karakter olmalı`);
+        }else if (input.value.length > max){
+            error(input, `${input.id} en fazla ${max} karakter olmalı`);
+    }else{
+        success(input);
+    }
+}
 
-//form için submit olayı gerçekleşir
-form.addEventListener('submit', function(event){
+function checkPasswordMach(input1, input2){
+    if(input1.value !== input2.value){
+        error(input2, 'Parolalar eşleşmiyor');
+    }
+}
 
-    event.preventDefault(); //submit olmaması için
-    //console.log(username.value);
+    //form için submit olayı gerçekleşir
+    form.addEventListener('submit', function(event){
 
-    // if(username.value === ''){
-    //    error(username , 'username gerekli');
-    // }else{
-    //    success(username);
-    // }
-
-    // if(email.value === ''){
-    //     error(email, 'email gerekli');
-    // }else if(!validateEmail(email.value)){
-    //     error(email, 'email formatında giriş yapınız');
-    // }
-    // else{
-    //     success(email);
-    // }
-
-    // if(password.value === ''){
-    //     error(password, 'parola gerekli');
-    // }else{
-    //     success(password);
-    // }
-
-    // if(repassword.value === ''){
-    //     error(repassword, 'parola tekrarı gerekli ');
-    // }else{
-    //     success(repassword);
-    // }
+        event.preventDefault(); //submit olmaması için
+    
+        checkRequired([username,email,password,repassword]);  
+        checkEmail(email);
+        checkLength(username,7,15);
+        checkLength(password,7,12);
+        checkPasswordMach(password,repassword);
 
 
-    checkRequired([username,email,password,repassword]);
-    // checkRequired(email);
-    // checkRequired(password);
-    // checkRequired(repassword);
-    checkEmail(email);
-
-
-});
+    });
